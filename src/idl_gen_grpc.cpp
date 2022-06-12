@@ -345,6 +345,7 @@ bool GenerateGoGRPC(const Parser &parser, const std::string &path,
 
 bool GenerateCppGRPC(const Parser &parser, const std::string &path,
                      const std::string &file_name) {
+  const auto &opts = parser.opts;
   int nservices = 0;
   for (auto it = parser.services_.vec.begin(); it != parser.services_.vec.end();
        ++it) {
@@ -355,6 +356,8 @@ bool GenerateCppGRPC(const Parser &parser, const std::string &path,
   grpc_cpp_generator::Parameters generator_parameters;
   // TODO(wvo): make the other parameters in this struct configurable.
   generator_parameters.use_system_headers = true;
+  generator_parameters.message_header_extension =
+      opts.filename_suffix + "." + opts.filename_extension;
 
   FlatBufFile fbfile(parser, file_name, FlatBufFile::kLanguageCpp);
 
